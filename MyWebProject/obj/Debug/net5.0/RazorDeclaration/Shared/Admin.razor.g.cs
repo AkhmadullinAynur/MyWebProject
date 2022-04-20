@@ -82,54 +82,13 @@ using MyWebProject.Shared;
 #line default
 #line hidden
 #nullable disable
-    public partial class Authorization : Microsoft.AspNetCore.Components.ComponentBase
+    public partial class Admin : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
         {
         }
         #pragma warning restore 1998
-#nullable restore
-#line 34 "C:\Users\user\Documents\MyWebProject\MyWebProject\Shared\Authorization.razor"
-       
-
-    private bool _isComplete;
-    private bool _isNotComplete;
-    private bool _adminMode;
-
-    private string _login;
-    private string _password;
-
-
-    private void LogIn()
-    {
-        _isComplete = !_isComplete;
-    }
-
-    private void NewAuthorization()                    //<==Переделать
-    {
-        if (_isComplete)
-        {
-            _isComplete = true;
-            _isNotComplete = false;
-            //TaskListDB.AddUser(_login, _password);
-        }
-        else
-        if (_login=="Admin" &&_password=="admin")
-        {
-            _isComplete = true;
-            _adminMode = true;
-        }
-        else
-        {
-            _isNotComplete = true;
-            _isComplete = false;
-        }
-    }
-
-#line default
-#line hidden
-#nullable disable
     }
 }
 #pragma warning restore 1591

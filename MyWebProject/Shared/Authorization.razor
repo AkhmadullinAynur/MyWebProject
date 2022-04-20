@@ -1,5 +1,69 @@
-﻿<h3>Authorization</h3>
+﻿<div class="modal-body">
+        <table class="table table-responsive-md">
+            <thead class="table-dark">
+                <tr>
+                    <th><h2>Authorization</h2></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input class="form-control" placeholder="Login" @bind-value="_login" /></td>
+                </tr>
+                <tr>
+                    <td><input class="form-control" type="password" placeholder="Password" @bind-value="_password" /></td>
+                </tr>
+                <tr>
+                    <td><button @onclick="NewAuthorization">Log in</button></td>
+                </tr>
+                @if (_isComplete)
+                {
+                    <tr>
+                        <td class="alert-danger"><h3>Authorization succesfull done!</h3></td>
+                    </tr>
+                }
+                @if (_adminMode)
+                {
+                    <tr>
+                        <td class="alert-danger"><h3>You are logged in as an administrator.</h3></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+</div>
 
 @code {
 
+    private bool _isComplete;
+    private bool _isNotComplete;
+    private bool _adminMode;
+
+    private string _login;
+    private string _password;
+
+
+    private void LogIn()
+    {
+        _isComplete = !_isComplete;
+    }
+
+    private void NewAuthorization()                    //<==Переделать
+    {
+        if (_isComplete)
+        {
+            _isComplete = true;
+            _isNotComplete = false;
+            //TaskListDB.AddUser(_login, _password);
+        }
+        else
+        if (_login=="Admin" &&_password=="admin")
+        {
+            _isComplete = true;
+            _adminMode = true;
+        }
+        else
+        {
+            _isNotComplete = true;
+            _isComplete = false;
+        }
+    }
 }
