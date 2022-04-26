@@ -82,6 +82,20 @@ using MyWebProject.Shared;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 11 "C:\Users\user\Documents\MyWebProject\MyWebProject\_Imports.razor"
+using MyWebProject.Data;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 12 "C:\Users\user\Documents\MyWebProject\MyWebProject\_Imports.razor"
+using MyWebProject.Pages;
+
+#line default
+#line hidden
+#nullable disable
     public partial class Authorization : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998

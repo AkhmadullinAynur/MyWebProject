@@ -33,5 +33,15 @@ namespace MyWebProject.Data
             User admin = new User("Admin", "admin");
             return admin;
         }
+
+        public static List<User> GetUserList()
+        {
+            List<User> listToReturn = new List<User>();
+            listToReturn.Add(new User("Oleg", "Oleg"));
+            listToReturn.Add(new User("Andrey", "Andrey"));
+            listToReturn.Add(new User("Ilnaz", "Ilnaz"));
+
+            return listToReturn;
+        }
     }
 }
