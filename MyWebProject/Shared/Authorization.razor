@@ -1,42 +1,53 @@
 ﻿<div class="modal-body">
-        <table class="table table-responsive-md">
-            <thead class="table-dark">
+    <table class="table table-responsive-md">
+        <thead class="table-dark">
+            <tr>
+                <th><h2>Authorization</h2></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input class="form-control" placeholder="Login" @bind-value="_login" /></td>
+            </tr>
+            <tr>
+                <td><input class="form-control" type="password" placeholder="Password" @bind-value="_password" /></td>
+            </tr>
+            <tr>
+                <td><button @onclick="AuthorizationNow">Log in</button></td>
+                <td><button @onclick="NewAuthorization">Authorization</button></td>
+            </tr>
+            @if (_isComplete)
+            {
                 <tr>
-                    <th><h2>Authorization</h2></th>
+                    <td class="alert-danger"><h3>Authorization succesfull done!</h3></td>
                 </tr>
-            </thead>
-            <tbody>
+            }
+            @if (_adminMode)
+            {
                 <tr>
-                    <td><input class="form-control" placeholder="Login" @bind-value="_login" /></td>
+                    <td class="alert-danger"><h3>You are logged in as an administrator.</h3></td>
                 </tr>
-                <tr>
-                    <td><input class="form-control" type="password" placeholder="Password" @bind-value="_password" /></td>
-                </tr>
-                <tr>
-                    <td><button @onclick="NewAuthorization">Log in</button></td>
-                </tr>
-                @if (_isComplete)
-                {
-                    <tr>
-                        <td class="alert-danger"><h3>Authorization succesfull done!</h3></td>
-                    </tr>
-                }
-                @if (_adminMode)
-                {
-                    <tr>
-                        <td class="alert-danger"><h3>You are logged in as an administrator.</h3></td>
-                    </tr>
-                    
-                }
-            </tbody>
-        </table>
+
+            }
+        </tbody>
+    </table>
 </div>
+@*@if (_userMode == true)
+{
+    <ProjectTable></ProjectTable>
+}*@
 
 @code {
+    [Parameter]
+    public bool AuthorizationIsActive { get; set; }
 
     private bool _isComplete;
     private bool _isNotComplete;
     private bool _adminMode;
+    //private bool _userMode;
+
+    //[Parameter]
+    //public bool UserMode { get; set; }
 
     private string _login;
     private string _password;
@@ -47,16 +58,16 @@
         _isComplete = !_isComplete;
     }
 
-    private void NewAuthorization()                    //<==Переделать
+    private void AuthorizationNow()                    //<==Переделать
     {
         if (_isComplete)
         {
             _isComplete = true;
             _isNotComplete = false;
-            //TaskListDB.AddUser(_login, _password);
+
         }
         else
-        if (_login=="Admin" &&_password=="admin")
+        if (_login == "Admin" && _password == "admin")
         {
             _isComplete = true;
             _adminMode = true;
@@ -67,8 +78,15 @@
             _isComplete = false;
         }
     }
-    private void AdminClick() 
+    private void AdminClick()
     {
-        
+
+    }
+    private void NewAuthorization()
+    {
+        AuthorizationIsActive = !AuthorizationIsActive;
+        //_userMode = true;
+        //_isComplete = true;
+        //TaskListDB.AddUser(_login, _password);
     }
 }

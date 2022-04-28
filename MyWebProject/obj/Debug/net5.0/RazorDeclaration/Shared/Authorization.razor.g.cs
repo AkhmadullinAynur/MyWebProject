@@ -104,12 +104,18 @@ using MyWebProject.Pages;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 34 "C:\Users\user\Documents\MyWebProject\MyWebProject\Shared\Authorization.razor"
+#line 40 "C:\Users\user\Documents\MyWebProject\MyWebProject\Shared\Authorization.razor"
        
+    [Parameter]
+    public bool AuthorizationIsActive { get; set; }
 
     private bool _isComplete;
     private bool _isNotComplete;
     private bool _adminMode;
+    //private bool _userMode;
+
+    //[Parameter]
+    //public bool UserMode { get; set; }
 
     private string _login;
     private string _password;
@@ -120,16 +126,16 @@ using MyWebProject.Pages;
         _isComplete = !_isComplete;
     }
 
-    private void NewAuthorization()                    //<==Переделать
+    private void AuthorizationNow()                    //<==Переделать
     {
         if (_isComplete)
         {
             _isComplete = true;
             _isNotComplete = false;
-            //TaskListDB.AddUser(_login, _password);
+
         }
         else
-        if (_login=="Admin" &&_password=="admin")
+        if (_login == "Admin" && _password == "admin")
         {
             _isComplete = true;
             _adminMode = true;
@@ -139,6 +145,17 @@ using MyWebProject.Pages;
             _isNotComplete = true;
             _isComplete = false;
         }
+    }
+    private void AdminClick()
+    {
+
+    }
+    private void NewAuthorization()
+    {
+        AuthorizationIsActive = !AuthorizationIsActive;
+        //_userMode = true;
+        //_isComplete = true;
+        //TaskListDB.AddUser(_login, _password);
     }
 
 #line default

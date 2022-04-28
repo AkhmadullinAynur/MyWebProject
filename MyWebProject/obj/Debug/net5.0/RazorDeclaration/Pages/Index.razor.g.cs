@@ -104,6 +104,23 @@ using MyWebProject.Pages;
         {
         }
         #pragma warning restore 1998
+#nullable restore
+#line 13 "C:\Users\user\Documents\MyWebProject\MyWebProject\Pages\Index.razor"
+         
+    private bool _startMode = true;
+    private bool _adminMode;
+    [Parameter]
+    public bool _userMode { get; set; }
+
+    private void NewAuthorization()
+    {
+        _userMode = !_userMode;
+        //TaskListDB.AddUser(_login, _password);
+    }
+
+#line default
+#line hidden
+#nullable disable
     }
 }
 #pragma warning restore 1591

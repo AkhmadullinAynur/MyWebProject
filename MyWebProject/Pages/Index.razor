@@ -1,8 +1,24 @@
 ﻿@page "/"
-
-<Authorization></Authorization>
+@if (_startMode)
+{
+    <Authorization AuthorizationIsActive="_userMode"></Authorization>
+}
+@if (_userMode == true)
+{
+    _startMode = false;
+        <ProjectTable></ProjectTable>
+    }
+@*<Authorization AuthorizationIsActive="_userMode"></Authorization>*@
 
 @code   {
-
+    private bool _startMode = true;
     private bool _adminMode;
+    [Parameter]
+    public bool _userMode { get; set; }
+
+    private void NewAuthorization()
+    {
+        _userMode = !_userMode;
+        //TaskListDB.AddUser(_login, _password);
+    }
 }  
