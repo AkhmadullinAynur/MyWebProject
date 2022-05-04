@@ -96,6 +96,13 @@ using MyWebProject.Pages;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 13 "C:\Users\user\Documents\MyWebProject\MyWebProject\_Imports.razor"
+using MyWebProject.Services;
+
+#line default
+#line hidden
+#nullable disable
     public partial class Registration : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -103,6 +110,30 @@ using MyWebProject.Pages;
         {
         }
         #pragma warning restore 1998
+#nullable restore
+#line 41 "C:\Users\user\Documents\MyWebProject\MyWebProject\Shared\Registration.razor"
+       
+    private string _login;
+    private string _surName;
+    private string _email;
+    private string _phoneNumber;
+    private string _password;
+
+    private bool _isComplete;
+
+    private void NewRegistration()
+    {
+        _isComplete = true;
+        MongoDataBase.AddUser(_login, _surName, _email, _phoneNumber, _password);
+    }
+
+
+
+
+
+#line default
+#line hidden
+#nullable disable
     }
 }
 #pragma warning restore 1591

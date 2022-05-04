@@ -10,16 +10,14 @@ namespace MyWebProject.Data
 {
     public class MongoDataBase
     {
-        //private readonly List<ProjectItem> projectItems;
-
-        //public MongoDataBase(List<ProjectItem> projectItems)
-        //{
-        //    this.projectItems = projectItems;
-        //}
-        //[BsonIgnoreIfDefault]
-        //public ObjectId _id { get; set; }
-
-        //public List<ProjectItem> projectItems { get; set; }
+        public MongoDataBase(List<User> user)
+        {
+            this.user = user;
+        }
+        [BsonIgnoreIfDefault]
+        public ObjectId _id { get; set; }
+        [BsonElement("ListOfTasks")]
+        public List<User> user { get; set; }
         public static List<string> GetUnitList()
         {
             var client = new MongoClient("mongodb://localhost");
@@ -32,6 +30,40 @@ namespace MyWebProject.Data
                 listToReturn.Add(item.Name);
             }
             return listToReturn;
+        }
+        public static void AddUser(string login, string surname, string email, string phone, string password) //Добавление в БД
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("Blazor");
+            var collection = database.GetCollection<User>("Users");
+            collection.InsertOne(new User(login, surname, email, phone, password));
+        }
+        public static List<User> GetUser(string login, string password)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("Blazor");
+            if (database.ListCollectionNames().ToList().Exists(x => x == login))
+            {
+                if (string.IsNullOrEmpty(login))
+                {
+                    return null;
+                }
+                else
+                {
+                    var collection = database.GetCollection<MongoDataBase>(login);
+                    List<User> list = new List<User>();
+                    list.AddRange(collection.Find(x => true).FirstOrDefault().user);
+                    return list;
+                    //var collection = database.GetCollection<MongoDataBase>(login);
+                    //List<User> list = new List<User>();
+                    //list.AddRange(collection.Find(x => true).FirstOrDefault().user);
+                    //return list;
+                }
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

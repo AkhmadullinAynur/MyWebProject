@@ -96,13 +96,34 @@ using MyWebProject.Pages;
 #line default
 #line hidden
 #nullable disable
-    public partial class Admin<AItem> : Microsoft.AspNetCore.Components.ComponentBase
+#nullable restore
+#line 13 "C:\Users\user\Documents\MyWebProject\MyWebProject\_Imports.razor"
+using MyWebProject.Services;
+
+#line default
+#line hidden
+#nullable disable
+    public partial class Admin : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
         {
         }
         #pragma warning restore 1998
+#nullable restore
+#line 25 "C:\Users\user\Documents\MyWebProject\MyWebProject\Shared\Admin.razor"
+       
+    [Parameter]
+    public List<User> users { get; set; }
+    [Parameter]
+    public bool ProjectIsActive { get; set; }
+
+    [Parameter] public RenderFragment ListNull { get; set; }
+    [Parameter] public RenderFragment ListEmpty { get; set; }
+
+#line default
+#line hidden
+#nullable disable
     }
 }
 #pragma warning restore 1591

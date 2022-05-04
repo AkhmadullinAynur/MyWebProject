@@ -96,6 +96,13 @@ using MyWebProject.Pages;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 13 "C:\Users\user\Documents\MyWebProject\MyWebProject\_Imports.razor"
+using MyWebProject.Services;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/")]
     public partial class Index : Microsoft.AspNetCore.Components.ComponentBase
     {
@@ -105,18 +112,73 @@ using MyWebProject.Pages;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 13 "C:\Users\user\Documents\MyWebProject\MyWebProject\Pages\Index.razor"
-         
-    private bool _startMode = true;
-    private bool _adminMode;
+#line 60 "C:\Users\user\Documents\MyWebProject\MyWebProject\Pages\Index.razor"
+       
     [Parameter]
-    public bool _userMode { get; set; }
+    public bool AuthorizationIsActive { get; set; }
+    [Parameter]
+    public bool RegistrationIsActive { get; set; }
+    [Parameter]
+    public bool LogInIsActive { get; set; }
+    [Parameter]
+    public bool AdminIsActive { get; set; }
 
+
+    private bool _isComplete;
+    private bool _isNotComplete;
+    private bool _adminMode;
+
+    private List<User> users= MongoDataBase.GetUser(_login, _password);
+
+
+    //[Parameter]
+    //public bool UserMode { get; set; }
+
+    private static string _login;
+    private static string _password;
+
+
+    private void LogIn()
+    {
+        _isComplete = !_isComplete;
+    }
+
+    private void AuthorizationNow()                    //<==Переделать
+    {
+        if (_isComplete)
+        {
+            _isComplete = true;
+            _isNotComplete = false;
+            AuthorizationIsActive = !AuthorizationIsActive;
+            LogInIsActive = !LogInIsActive;
+
+        }
+        else
+        if (_login == "Admin" && _password == "admin")
+        {
+            _isComplete = true;
+            _adminMode = true;
+            _isNotComplete = false;
+            AuthorizationIsActive = !AuthorizationIsActive;
+            AdminIsActive = !AdminIsActive;
+
+        }
+        else
+        {
+            _isNotComplete = true;
+            _isComplete = false;
+        }
+    }
+    private void AdminClick()
+    {
+
+    }
     private void NewAuthorization()
     {
-        _userMode = !_userMode;
-        //TaskListDB.AddUser(_login, _password);
+        AuthorizationIsActive = !AuthorizationIsActive;
+        RegistrationIsActive = !RegistrationIsActive;
     }
+
 
 #line default
 #line hidden

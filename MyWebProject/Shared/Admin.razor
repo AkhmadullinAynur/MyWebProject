@@ -1,6 +1,33 @@
-﻿@typeparam AItem
-<h3>Admin</h3>
+﻿<h3>Admin</h3>
+
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Email</th>
+            <th>Phone</th>
+        </tr>
+    </thead>
+    <TemplateAccount Items="users">
+        <ItemTemplate Context="item">
+            <td>@item.Name</td>
+            <td>@item.SurName</td>
+            <td>@item.Email</td>
+            <td>@item.PhoneNumber</td>
+        </ItemTemplate>
+    </TemplateAccount>
+    
+</table>
+
+
 
 @code {
+    [Parameter]
+    public List<User> users { get; set; }
+    [Parameter]
+    public bool ProjectIsActive { get; set; }
 
+    [Parameter] public RenderFragment ListNull { get; set; }
+    [Parameter] public RenderFragment ListEmpty { get; set; }
 }

@@ -1,24 +1,126 @@
 ﻿@page "/"
-@if (_startMode)
+@if (!AuthorizationIsActive)
 {
-    <Authorization AuthorizationIsActive="_userMode"></Authorization>
+    <div class="modal-body">
+        <table class="table table-responsive-md">
+            <thead class="table-dark">
+                <tr>
+                    <th><h2>Authorization</h2></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input class="form-control" placeholder="Login" @bind-value="_login" /></td>
+                </tr>
+                <tr>
+                    <td><input class="form-control" type="password" placeholder="Password" @bind-value="_password" /></td>
+                </tr>
+                <tr>
+                    <th>
+                        <button class="btn btn-dark" @onclick="AuthorizationNow">Log in</button>
+                        <button class="btn btn-dark" @onclick="NewAuthorization">New registration</button>
+                    </th>
+                </tr>
+                @if (_isComplete)
+                {
+                    <tr>
+                        <td class="alert-danger"><h3>Authorization succesfull done!</h3></td>
+                    </tr>
+                }
+                @if (_adminMode)
+                {
+                    <tr>
+                        <td class="alert-danger"><h3>You are logged in as an administrator.</h3></td>
+                    </tr>
+                }
+                @if (_isNotComplete)
+                {
+                    <tr>
+                        <td class="alert-danger"><h3>Authorization failed!</h3></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
-@if (_userMode == true)
+
+@if (LogInIsActive)
 {
-    _startMode = false;
-        <ProjectTable></ProjectTable>
-    }
-@*<Authorization AuthorizationIsActive="_userMode"></Authorization>*@
+    <ProjectTable></ProjectTable>
+}
+@if (RegistrationIsActive)
+{
+    <Registration></Registration>
+}
+@if (AdminIsActive)
+{
+    <Admin></Admin>
+}
 
-@code   {
-    private bool _startMode = true;
-    private bool _adminMode;
+@code {
     [Parameter]
-    public bool _userMode { get; set; }
+    public bool AuthorizationIsActive { get; set; }
+    [Parameter]
+    public bool RegistrationIsActive { get; set; }
+    [Parameter]
+    public bool LogInIsActive { get; set; }
+    [Parameter]
+    public bool AdminIsActive { get; set; }
 
+
+    private bool _isComplete;
+    private bool _isNotComplete;
+    private bool _adminMode;
+
+    private List<User> users= MongoDataBase.GetUser(_login, _password);
+
+
+    //[Parameter]
+    //public bool UserMode { get; set; }
+
+    private static string _login;
+    private static string _password;
+
+
+    private void LogIn()
+    {
+        _isComplete = !_isComplete;
+    }
+
+    private void AuthorizationNow()                    //<==Переделать
+    {
+        if (_isComplete)
+        {
+            _isComplete = true;
+            _isNotComplete = false;
+            AuthorizationIsActive = !AuthorizationIsActive;
+            LogInIsActive = !LogInIsActive;
+
+        }
+        else
+        if (_login == "Admin" && _password == "admin")
+        {
+            _isComplete = true;
+            _adminMode = true;
+            _isNotComplete = false;
+            AuthorizationIsActive = !AuthorizationIsActive;
+            AdminIsActive = !AdminIsActive;
+
+        }
+        else
+        {
+            _isNotComplete = true;
+            _isComplete = false;
+        }
+    }
+    private void AdminClick()
+    {
+
+    }
     private void NewAuthorization()
     {
-        _userMode = !_userMode;
-        //TaskListDB.AddUser(_login, _password);
+        AuthorizationIsActive = !AuthorizationIsActive;
+        RegistrationIsActive = !RegistrationIsActive;
     }
-}  
+
+}

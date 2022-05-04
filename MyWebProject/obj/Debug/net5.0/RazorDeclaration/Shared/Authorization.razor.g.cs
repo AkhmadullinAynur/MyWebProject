@@ -96,6 +96,13 @@ using MyWebProject.Pages;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 13 "C:\Users\user\Documents\MyWebProject\MyWebProject\_Imports.razor"
+using MyWebProject.Services;
+
+#line default
+#line hidden
+#nullable disable
     public partial class Authorization : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -104,15 +111,18 @@ using MyWebProject.Pages;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 40 "C:\Users\user\Documents\MyWebProject\MyWebProject\Shared\Authorization.razor"
+#line 47 "C:\Users\user\Documents\MyWebProject\MyWebProject\Shared\Authorization.razor"
        
     [Parameter]
     public bool AuthorizationIsActive { get; set; }
 
+
     private bool _isComplete;
     private bool _isNotComplete;
     private bool _adminMode;
-    //private bool _userMode;
+
+
+
 
     //[Parameter]
     //public bool UserMode { get; set; }
@@ -153,9 +163,8 @@ using MyWebProject.Pages;
     private void NewAuthorization()
     {
         AuthorizationIsActive = !AuthorizationIsActive;
-        //_userMode = true;
-        //_isComplete = true;
-        //TaskListDB.AddUser(_login, _password);
+        _isNotComplete = true;
+        MongoDataBase.GetUser(_login,_password);
     }
 
 #line default

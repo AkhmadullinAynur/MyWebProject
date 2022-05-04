@@ -13,8 +13,10 @@
                 <td><input class="form-control" type="password" placeholder="Password" @bind-value="_password" /></td>
             </tr>
             <tr>
-                <td><button @onclick="AuthorizationNow">Log in</button></td>
-                <td><button @onclick="NewAuthorization">Authorization</button></td>
+                <th>
+                    <button class="btn btn-dark" @onclick="AuthorizationNow">Log in</button>
+                    <button class="btn btn-dark" @onclick="NewAuthorization">Registration</button>
+                </th>
             </tr>
             @if (_isComplete)
             {
@@ -27,24 +29,32 @@
                 <tr>
                     <td class="alert-danger"><h3>You are logged in as an administrator.</h3></td>
                 </tr>
-
+            }
+            @if (_isNotComplete)
+            {
+                <tr>
+                    <td class="alert-danger"><h3>Authorization failed!</h3></td>
+                </tr>
             }
         </tbody>
     </table>
 </div>
-@*@if (_userMode == true)
+@if (AuthorizationIsActive)
 {
     <ProjectTable></ProjectTable>
-}*@
+}
 
 @code {
     [Parameter]
     public bool AuthorizationIsActive { get; set; }
 
+
     private bool _isComplete;
     private bool _isNotComplete;
     private bool _adminMode;
-    //private bool _userMode;
+
+
+
 
     //[Parameter]
     //public bool UserMode { get; set; }
@@ -85,8 +95,7 @@
     private void NewAuthorization()
     {
         AuthorizationIsActive = !AuthorizationIsActive;
-        //_userMode = true;
-        //_isComplete = true;
-        //TaskListDB.AddUser(_login, _password);
+        _isNotComplete = true;
+        MongoDataBase.GetUser(_login,_password);
     }
 }
